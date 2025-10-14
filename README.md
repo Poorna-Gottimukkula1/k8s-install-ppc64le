@@ -8,14 +8,21 @@ There are two methods to install Kubernetes on PowerVS:
 
 1. **Manually create instances for master and worker nodes on PowerVS or PowerVC:**
    - Provision the virtual machines (VMs) with the required specifications (CPU, memory, disk space, etc.) based on your requirements.
-2. **Clone the repository:**
+  
+2. **Create a Docker container using the image used by the Prow CI job and exec into it:**
+
+    ```bash
+    docker run --entrypoint /bin/bash -d -it us-central1-docker.pkg.dev/k8s-staging-test-infra/images/kubekins-e2e:v20250905-c89b045f57-master
+    docker exec -it b97066d90dc2 bash
+    ```
+3. **Clone the repository:**
    ```bash
    git clone https://github.com/kubernetes-sigs/provider-ibmcloud-test-infra.git
    cd provider-ibmcloud-test-infra/kubetest2-tf/data/k8s-ansible
    ls -la
    ```
 
-3. Get the latest Kubernetes build:
+4. Get the latest Kubernetes build:
    - Retrieve the latest K8s build version from [dl.k8s.io](https://dl.k8s.io/ci/latest.txt).
    - Update the `common.auto.tfvars.json` file with the latest build version.
     ```bash
@@ -34,7 +41,7 @@ There are two methods to install Kubernetes on PowerVS:
     EOF
     ```
 
-4. Get the IP addresses for the master and worker nodes.
+5. Get the IP addresses for the master and worker nodes.
     - Retrieve the IP addresses for **masters** and **workers** from your PowerVS or PowerVC environment. These will be needed to update the `hosts` inventory file for Ansible.
 
     ```
@@ -47,7 +54,7 @@ There are two methods to install Kubernetes on PowerVS:
     135.90.79.101
     EOF
     ```
-5. Run the Ansible playbook to install Kubernetes:
+6. Run the Ansible playbook to install Kubernetes:
     - Once the IPs are added to the `hosts` file and the configuration in `common.auto.tfvars.json` is updated, run the following command to trigger the k8s installation:
     ```bash
     ansible-playbook -vv -i hosts --extra-vars @common.auto.tfvars.json install-k8s.yml
