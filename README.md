@@ -15,19 +15,21 @@ There are two methods to install Kubernetes on PowerVS:
    ls -la
    ```
 
-3. **Get the latest stable k8s build from k8s Latest Builds and update the `common.auto.tfvars.json` file with the following content.**
+3. Get the latest Kubernetes build:
+   - Retrieve the latest K8s build version from [dl.k8s.io](https://dl.k8s.io/ci/latest.txt).
+   - Update the `common.auto.tfvars.json` file with the latest build version.
     ```bash
     cat <<EOF > common.auto.tfvars.json
     {
       "release_marker": "v1.35.0-alpha.0.820+0b6dba8eb028bb",
       "build_version": "v1.35.0-alpha.0.820+0b6dba8eb028bb",
       "runtime": "containerd",
-      "cluster_name": "k8s-anu",
+      "cluster_name": "k8s-poorna", # Update with your desired cluster name
       "apiserver_port": 992,
-      "workers_count": 1,
+      "workers_count": 1, # Update with the number of workers you want
       "bootstrap_token": "3fb0vq.pf75bfrldw49egvw",
-      "kubeconfig_path": "/workspace/kubeconfig",
-      "ssh_private_key": "/workspace/id_rsa"
+      "kubeconfig_path": "/workspace/kubeconfig", # Update path if necessary 
+      "ssh_private_key": "/workspace/id_rsa" # Update path to your private SSH key
     }
     EOF
     ```
