@@ -44,7 +44,7 @@ There are two methods to install Kubernetes on PowerVS:
 5. Get the IP addresses for the master and worker nodes.
     - Retrieve the IP addresses for **masters** and **workers** from your PowerVS or PowerVC environment. These will be needed to update the `hosts` inventory file for Ansible.
 
-    ```
+    ```bash
     cat <<EOF > hosts
     [masters]
     135.90.79.100
